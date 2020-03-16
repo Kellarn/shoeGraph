@@ -14,16 +14,6 @@ import {
 const Barchart = () => {
   const { chartData } = useContext(ChartsDataContext);
   const [manipulatedChartData, setManinpulatedChartData] = useState([]);
-  console.log('Barchart -> chartData', chartData);
-  //   const sizes = Object.keys(chartData.sizes).map(function(key) {
-  //     return { size:, amount: chartData.sizes[key] };
-  //   });
-  // for (const sizes in chartData.sizes) {
-  //   console.log(`${sizes}`);
-  //   for (const values in sizes) {
-  //     console.log(`${values.value}: ${sizes[values]}`);
-  //   }
-  // }
   useEffect(() => {
     for (let [key, value] of Object.entries(chartData.sizes)) {
       let sizeObject = { size: key };
@@ -38,12 +28,13 @@ const Barchart = () => {
         sizeObject
       ]);
     }
-    return () => {
-      console.log(manipulatedChartData);
+    return sizeObject => {
+      setManinpulatedChartData(manipulatedChartData => [
+        ...manipulatedChartData,
+        sizeObject
+      ]);
     };
   }, [chartData]);
-  // Object.values(chartData.sizes).forEach(value => console.log(key, value));
-  console.log(manipulatedChartData);
 
   return (
     <ResponsiveContainer width='100%' height='100%'>

@@ -16,7 +16,13 @@ const ChartContainer = () => {
         method: 'get',
         url: 'https://homeexercise.volumental.com/sizingsample',
         headers: {
-          Authorization: 'Basic ' + btoa('admin' + ':' + 'ToPsEcReT'),
+          Authorization:
+            'Basic ' +
+            btoa(
+              process.env.REACT_APP_USERNAME +
+                ':' +
+                process.env.REACT_APP_PASSWORD
+            ),
           'Content-type': 'application/json'
         },
         mode: 'cors'
@@ -35,11 +41,9 @@ const ChartContainer = () => {
   }, []);
 
   return (
-    <>
-      <ChartsDataContext.Provider value={{ chartData, setChartData }}>
-        {chartData.system && <BarChart />}
-      </ChartsDataContext.Provider>
-    </>
+    <ChartsDataContext.Provider value={{ chartData, setChartData }}>
+      {chartData.system && <BarChart />}
+    </ChartsDataContext.Provider>
   );
 };
 export default ChartContainer;
