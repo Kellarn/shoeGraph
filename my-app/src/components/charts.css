@@ -1,4 +1,8 @@
 .chart-wrapper {
   width: 100vw;
-  height: 600px;
+  flex: 1 1 auto;
+}
+.error-wrapper {
+  background: #cee2ee;
+  height: 100%;
 }
