@@ -1,21 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ChartsDataContext from './ChartsDataContext';
+import BarChart from './BarChart';
+import './charts.css';
 
 const ChartContainer = () => {
-  useEffect(() => {
+  const [chartData, setChartData] = useState({
+    gender: null,
+    sizes: null,
+    system: null
+  });
+  useEffect(chartData => {
     const fetchData = async () => {
-      let res = await axios({
-        method: 'get',
-        url: 'https://homeexercise.volumental.com',
-        headers: {
-          Authorization: 'Basic ' + btoa('admin' + ':' + 'ToPsEcReT'),
-          'Content-type': 'application/json'
-        },
-        mode: 'cors'
-      });
-      console.log(res);
-      let { Authorization } = res.config.headers.Authorization;
-
       let sampleRes = await axios({
         method: 'get',
         url: 'https://homeexercise.volumental.com/sizingsample',
@@ -25,14 +21,24 @@ const ChartContainer = () => {
         },
         mode: 'cors'
       });
-      console.log(sampleRes);
+      console.log(sampleRes.data.data[0]);
+      const { data } = sampleRes.data;
+      console.log('fetchData -> data', data[0]);
+      setChartData({
+        ...chartData,
+        gender: data[0].gender,
+        sizes: data[0].sizes,
+        system: data[0].system
+      });
     };
     fetchData();
   }, []);
 
   return (
     <>
-      <p>Hello</p>
+      <ChartsDataContext.Provider value={{ chartData, setChartData }}>
+        {chartData.system && <BarChart />}
+      </ChartsDataContext.Provider>
     </>
   );
 };
