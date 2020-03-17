@@ -13,9 +13,10 @@ import {
 
 const Barchart = () => {
   const { chartData } = useContext(ChartsDataContext);
+  console.log('Barchart -> chartData', chartData);
   const [manipulatedChartData, setManinpulatedChartData] = useState([]);
   useEffect(() => {
-    for (let [key, value] of Object.entries(chartData.sizes)) {
+    for (let [key, value] of Object.entries(chartData[0].sizes)) {
       let sizeObject = { size: key };
       console.log(key, value);
       for (let [key2, value2] of Object.entries(value)) {
@@ -28,14 +29,15 @@ const Barchart = () => {
         sizeObject
       ]);
     }
-    return sizeObject => {
-      setManinpulatedChartData(manipulatedChartData => [
-        ...manipulatedChartData,
-        sizeObject
-      ]);
-    };
+    // return sizeObject => {
+    //   setManinpulatedChartData(manipulatedChartData => [
+    //     ...manipulatedChartData,
+    //     sizeObject
+    //   ]);
+    // };
   }, [chartData]);
 
+  console.log(manipulatedChartData);
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <BarChart

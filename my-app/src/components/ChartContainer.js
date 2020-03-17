@@ -5,14 +5,15 @@ import BarChart from './BarChart';
 import './charts.css';
 
 const ChartContainer = () => {
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState([]);
   const [error, setError] = useState(false);
+
   useEffect((chartData, error) => {
-    const fetchData = async () => {
+    const fetchData = async (nextPage = '') => {
       try {
         let sampleRes = await axios({
           method: 'get',
-          url: 'https://homeexercise.volumental.com/sizingsample',
+          url: `http://homeexercise.volumental.com/sizingsample${nextPage}`,
           headers: {
             Authorization:
               'Basic ' +
@@ -28,16 +29,17 @@ const ChartContainer = () => {
         if (error) {
           setError(false);
         }
-        console.log(sampleRes.data.data[0]);
-        const { data } = sampleRes.data;
+        console.log(sampleRes);
+        const { data, 'next-page': nextPage2 } = sampleRes.data;
         console.log('fetchData -> data', data[0]);
-        setChartData({
-          ...chartData,
-          [data[0].gender + data[0].system]: data[0].sizes
-          // gender: data[0].gender,
-          // sizes: data[0].sizes,
-          // system: data[0].system
-        });
+        const chartDataObject = {
+          [data[0].gender]: data[0].system,
+          sizes: data[0].sizes
+        };
+        setChartData(chartData => [...chartData, chartDataObject]);
+        if (nextPage2 !== undefined) {
+          fetchData(`?page=${nextPage2}`);
+        }
       } catch (error) {
         // Error
         if (error.response) {
@@ -65,7 +67,6 @@ const ChartContainer = () => {
     };
     fetchData();
   }, []);
-
   console.log(chartData);
   return (
     <ChartsDataContext.Provider value={{ chartData, setChartData }}>
@@ -75,7 +76,7 @@ const ChartContainer = () => {
           <p>Please check back later!</p>
         </div>
       )}
-      {chartData.system && <BarChart />}
+      {chartData[0] && <BarChart />}
     </ChartsDataContext.Provider>
   );
 };
