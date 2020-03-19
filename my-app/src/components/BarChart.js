@@ -41,18 +41,18 @@ const Barchart = () => {
           bottom: 5
         }}
       >
-        <XAxis dataouterKey='size' />
+        <XAxis dataKey='size' />
         <YAxis />
         <CartesianGrid strokeDasharray='3 3' />
         <Tooltip fill='#356B92' />
         <Legend />
-        <Bar dataouterKey='A' stackId='a' fill='#356B92' />
-        <Bar dataouterKey='B' stackId='a' fill='#78CDCF' />
-        <Bar dataouterKey='C' stackId='a' fill='#40C8DE' />
-        <Bar dataouterKey='D' stackId='a' fill='#FF858C' />
-        <Bar dataouterKey='E' stackId='a' fill='#B2D1E5' />
-        <Bar dataouterKey='2A' stackId='a' fill='#7495A9' />
-        <Bar dataouterKey='2E' stackId='a' fill='##131732' />
+        <Bar dataKey='A' stackId='a' fill='#356B92' />
+        <Bar dataKey='B' stackId='a' fill='#78CDCF' />
+        <Bar dataKey='C' stackId='a' fill='#40C8DE' />
+        <Bar dataKey='D' stackId='a' fill='#FF858C' />
+        <Bar dataKey='E' stackId='a' fill='#B2D1E5' />
+        <Bar dataKey='2A' stackId='a' fill='#7495A9' />
+        <Bar dataKey='2E' stackId='a' fill='##131732' />
       </BarChart>
     </ResponsiveContainer>
   );
