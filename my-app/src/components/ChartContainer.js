@@ -104,9 +104,17 @@ const ChartContainer = () => {
               </button>
             ))}
           </div>
+          {chosenDataSet.system && chosenDataSet.gender && (
+            <>
+              <h2 className='system'>{chosenDataSet.system}</h2>
+              <h2 className='gender'>{chosenDataSet.gender}</h2>
+            </>
+          )}
           <BarChart />
         </>
-      ) : null}
+      ) : (
+        <h1>Data can't be loaded, please refresh and try again</h1>
+      )}
     </ChartsDataContext.Provider>
   );
 };

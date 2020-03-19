@@ -21,7 +21,7 @@
 }
 .App-logo {
   padding-top: 20px;
-  height: 10vmin;
+  height: 100px;
   pointer-events: none;
   max-width: 100%;
 }
@@ -36,5 +36,13 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 992px) {
+  .App-header {
+    padding: 30px 10%;
+  }
+  .App-logo {
+    height: 100px;
   }
 }

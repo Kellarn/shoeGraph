@@ -17,10 +17,11 @@ const Barchart = () => {
   const [manipulatedChartData, setManinpulatedChartData] = useState([]);
   useEffect(() => {
     setManinpulatedChartData([]);
-    for (let [key, value] of Object.entries(chosenDataSet.sizes)) {
-      let sizeObject = { size: key };
-      for (let [key2, value2] of Object.entries(value)) {
-        sizeObject[key2] = value2;
+    for (let [outerKey, outerValue] of Object.entries(chosenDataSet.sizes)) {
+      console.log(outerKey, outerValue);
+      let sizeObject = { size: outerKey };
+      for (let [innerKey, innerValue] of Object.entries(outerValue)) {
+        sizeObject[innerKey] = innerValue;
       }
       setManinpulatedChartData(manipulatedChartData => [
         ...manipulatedChartData,
@@ -36,24 +37,24 @@ const Barchart = () => {
         height={600}
         data={manipulatedChartData && manipulatedChartData}
         margin={{
-          top: 20,
-          right: 30,
-          left: 20,
+          top: 40,
+          right: 40,
+          left: 40,
           bottom: 5
         }}
       >
-        <XAxis dataKey='size' />
+        <XAxis dataouterKey='size' />
         <YAxis />
-        <CartesianGrid strokeDasharray='' />
-        <Tooltip />
+        <CartesianGrid strokeDasharray='3 3' />
+        <Tooltip fill='#356B92' />
         <Legend />
-        <Bar dataKey='A' stackId='a' fill='#356B92' />
-        <Bar dataKey='B' stackId='a' fill='#78CDCF' />
-        <Bar dataKey='C' stackId='a' fill='#40C8DE' />
-        <Bar dataKey='D' stackId='a' fill='#FF858C' />
-        <Bar dataKey='E' stackId='a' fill='#B2D1E5' />
-        <Bar dataKey='2A' stackId='a' fill='#7495A9' />
-        <Bar dataKey='2E' stackId='a' fill='##131732' />
+        <Bar dataouterKey='A' stackId='a' fill='#356B92' />
+        <Bar dataouterKey='B' stackId='a' fill='#78CDCF' />
+        <Bar dataouterKey='C' stackId='a' fill='#40C8DE' />
+        <Bar dataouterKey='D' stackId='a' fill='#FF858C' />
+        <Bar dataouterKey='E' stackId='a' fill='#B2D1E5' />
+        <Bar dataouterKey='2A' stackId='a' fill='#7495A9' />
+        <Bar dataouterKey='2E' stackId='a' fill='##131732' />
       </BarChart>
     </ResponsiveContainer>
   );

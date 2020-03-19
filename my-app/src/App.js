@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import volumentalLogo from './volumental.svg';
 import ChartContainer from './components/ChartContainer';
 import './App.css';
