@@ -13,12 +13,11 @@ import {
 
 const Barchart = () => {
   const { chosenDataSet } = useContext(ChartsDataContext);
-  console.log('Barchart -> chartData', chosenDataSet);
   const [manipulatedChartData, setManinpulatedChartData] = useState([]);
+
   useEffect(() => {
     setManinpulatedChartData([]);
     for (let [outerKey, outerValue] of Object.entries(chosenDataSet.sizes)) {
-      console.log(outerKey, outerValue);
       let sizeObject = { size: outerKey };
       for (let [innerKey, innerValue] of Object.entries(outerValue)) {
         sizeObject[innerKey] = innerValue;
@@ -30,7 +29,6 @@ const Barchart = () => {
     }
   }, [chosenDataSet]);
 
-  console.log(manipulatedChartData);
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <BarChart
