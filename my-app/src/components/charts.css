@@ -1,8 +1,44 @@
 .chart-wrapper {
   width: 100vw;
   flex: 1 1 auto;
+  max-height: 60vh;
+}
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.button {
+  display: block;
+  overflow: visible;
+  height: 40px;
+  width: 150px;
+  /* margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 0px;
+  padding-right: 40px;
+  padding-left: 40px; */
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  border: 1px none #000;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 1px 1px 13px 0 rgba(0, 0, 0, 0.1);
+  font-family: Lato, sans-serif;
+  color: #333;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+.button.active {
+  color: white;
+  background: black;
 }
 .error-wrapper {
   background: #cee2ee;
-  height: 100%;
 }

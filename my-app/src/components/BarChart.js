@@ -12,30 +12,22 @@ import {
 } from 'recharts';
 
 const Barchart = () => {
-  const { chartData } = useContext(ChartsDataContext);
-  console.log('Barchart -> chartData', chartData);
+  const { chosenDataSet } = useContext(ChartsDataContext);
+  console.log('Barchart -> chartData', chosenDataSet);
   const [manipulatedChartData, setManinpulatedChartData] = useState([]);
   useEffect(() => {
-    for (let [key, value] of Object.entries(chartData[0].sizes)) {
+    setManinpulatedChartData([]);
+    for (let [key, value] of Object.entries(chosenDataSet.sizes)) {
       let sizeObject = { size: key };
-      console.log(key, value);
       for (let [key2, value2] of Object.entries(value)) {
-        console.log(key2, value2);
         sizeObject[key2] = value2;
       }
-      console.log(sizeObject);
       setManinpulatedChartData(manipulatedChartData => [
         ...manipulatedChartData,
         sizeObject
       ]);
     }
-    // return sizeObject => {
-    //   setManinpulatedChartData(manipulatedChartData => [
-    //     ...manipulatedChartData,
-    //     sizeObject
-    //   ]);
-    // };
-  }, [chartData]);
+  }, [chosenDataSet]);
 
   console.log(manipulatedChartData);
   return (

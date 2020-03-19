@@ -8,12 +8,6 @@
   height: 100vh;
 }
 
-.App-logo {
-  padding-top: 20px;
-  height: 30vmin;
-  pointer-events: none;
-}
-
 .App-header {
   background-color: white;
   flex: 0 1 auto;
@@ -23,6 +17,13 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 100px 30%;
+}
+.App-logo {
+  padding-top: 20px;
+  height: 10vmin;
+  pointer-events: none;
+  max-width: 100%;
 }
 
 .App-link {

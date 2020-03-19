@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChartsDataContext from './ChartsDataContext';
 import BarChart from './BarChart';
+import cn from 'classnames';
 import './charts.css';
 
 const ChartContainer = () => {
   const [chartData, setChartData] = useState([]);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [chosenDataSet, setChosenDataSet] = useState({});
 
   useEffect((chartData, error) => {
     const fetchData = async (nextPage = '') => {
+      setIsLoading(true);
       try {
         let sampleRes = await axios({
           method: 'get',
@@ -29,16 +33,13 @@ const ChartContainer = () => {
         if (error) {
           setError(false);
         }
-        console.log(sampleRes);
-        const { data, 'next-page': nextPage2 } = sampleRes.data;
-        console.log('fetchData -> data', data[0]);
-        const chartDataObject = {
-          [data[0].gender]: data[0].system,
-          sizes: data[0].sizes
-        };
-        setChartData(chartData => [...chartData, chartDataObject]);
-        if (nextPage2 !== undefined) {
-          fetchData(`?page=${nextPage2}`);
+        const { data, 'next-page': nextPageRes } = sampleRes.data;
+        setChartData(chartData => [...chartData, data[0]]);
+        if (nextPageRes !== undefined) {
+          fetchData(`?page=${nextPageRes}`);
+        }
+        if (data[0] && nextPageRes === undefined) {
+          setIsLoading(false);
         }
       } catch (error) {
         // Error
@@ -61,22 +62,51 @@ const ChartContainer = () => {
           // Something happened in setting up the request and triggered an Error
           console.log('Error', error.message);
         }
-        console.log(error);
         setError(true);
+        setIsLoading(false);
       }
     };
     fetchData();
   }, []);
-  console.log(chartData);
+
+  useEffect(
+    chosenDataSet => {
+      if (chosenDataSet !== chartData[0]) setChosenDataSet(chartData[0]);
+    },
+    [chartData]
+  );
+
   return (
-    <ChartsDataContext.Provider value={{ chartData, setChartData }}>
-      {error && (
+    <ChartsDataContext.Provider value={{ chosenDataSet, setChosenDataSet }}>
+      {isLoading && <h1>Loading....</h1>}
+      {!isLoading && error ? (
         <div className='error-wrapper'>
           <h2>Network error</h2>
           <p>Please check back later!</p>
         </div>
-      )}
-      {chartData[0] && <BarChart />}
+      ) : !isLoading && chartData[0] ? (
+        <>
+          <div className={'button-wrapper'}>
+            {chartData.map(currentData => (
+              <button
+                key={`${currentData.gender}${currentData.system}`}
+                className={cn(
+                  `button ${currentData.gender} ${currentData.system}`,
+                  {
+                    active:
+                      currentData.gender === chosenDataSet.gender &&
+                      currentData.system === chosenDataSet.system
+                  }
+                )}
+                onClick={() => setChosenDataSet(currentData)}
+              >
+                <span>{currentData.system + currentData.gender}</span>
+              </button>
+            ))}
+          </div>
+          <BarChart />
+        </>
+      ) : null}
     </ChartsDataContext.Provider>
   );
 };
